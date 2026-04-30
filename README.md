@@ -123,7 +123,7 @@ The final lab simulates a small healthcare provider network. It does not need to
 | Attacker | Red-team testing | Kali Purple, Garak, PyRIT, Atomic Red Team |
 | Mgmt/Infra | Management services | OPNsense, DNS, Vault, Gitea |
 
-## Suggested Repo Layout for This Umbrella Repo
+## Repo Layout
 
 ```text
 medseclab/
@@ -145,16 +145,6 @@ medseclab/
 └── related-repos.md
 ```
 
-## Current Status
-
-Project status: **Phase 0 — planning and repository setup**
-
-Immediate focus:
-
-1. Create the umbrella `medseclab` repo
-2. Create the first technical repo: `clinical-ai-gateway`
-3. Document scope, architecture, and roadmap
-4. Build the minimum secure AI gateway before adding the full SOC and red-team layers
 
 ## Important Rules
 

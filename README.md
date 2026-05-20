@@ -25,8 +25,8 @@ MedSecLab is the umbrella repo. The technical work is split into focused reposit
 | Repository | Purpose | Status |
 |---|---|---|
 | [`medseclab`](#) | Portfolio landing page, architecture, roadmap, infra notes, lessons learned | Phase 0 |
-| [`clinical-ai-gateway`](#) | Secure FastAPI gateway for clinical LLM/RAG workloads | Planned first build |
-| [`clinical-ai-detections`](#) | Wazuh rules, Suricata signatures, dashboards, and detection docs | Planned later |
+| [`clinical-ai-gateway`](https://github.com/MohsenBah/clinical-ai-gateway) | Secure FastAPI gateway for clinical LLM/RAG workloads | Active |
+| [`clinical-ai-detections`](https://github.com/MohsenBah/clinical-ai-detections) | Wazuh rules, Suricata signatures, dashboards, and detection docs | Active |
 | [`clinical-ai-redteam`](#) | Garak/PyRIT testing methodology, findings, mitigations, and MITRE ATLAS mapping | Planned later |
 
 ## Main Project Tracks

@@ -13,7 +13,6 @@ End-to-end walkthrough of the clinical AI security pipeline (~2 min).
 
 https://github.com/user-attachments/assets/e31164a2-6abf-4c0c-8143-fafe04147924
 
-**[Download / watch: `docs/demo.webm`](docs/demo.webm)**[demo-github.webm](https://github.com/user-attachments/assets/e31164a2-6abf-4c0c-8143-fafe04147924)
 
 
 The demo covers:

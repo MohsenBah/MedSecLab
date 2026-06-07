@@ -1,3 +1,4 @@
+
 # MedSecLab
 
 **MedSecLab** is a portfolio-grade reference architecture for securely deploying clinical AI applications in a simulated healthcare environment.
@@ -12,7 +13,8 @@ End-to-end walkthrough of the clinical AI security pipeline (~2 min):
 
 <video src="docs/demo.webm" controls width="100%"></video>
 
-**[Download / watch: `docs/demo.webm`](docs/demo.webm)**
+**[Download / watch: `docs/demo.webm`](docs/demo.webm)**[demo-github.webm](https://github.com/user-attachments/assets/e31164a2-6abf-4c0c-8143-fafe04147924)
+
 
 The demo covers:
 

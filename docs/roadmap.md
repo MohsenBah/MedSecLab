@@ -4,6 +4,8 @@ This document outlines how the system is built, expanded, and validated over tim
 
 It is not a task checklist. It captures architectural intent, sequencing decisions, and why each layer exists.
 
+**Last updated:** June 2026 — demo video recorded; Phases 3.1A–3.2A complete across gateway and detections repos.
+
 ---
 
 ## 1. Core Objective
@@ -21,13 +23,14 @@ Building a secure, auditable clinical AI system that supports:
 
 The system is developed in layers, each adding a new dimension:
 
-| Layer | Focus | Outcome |
-|------|------|--------|
-| AI Gateway | Secure inference interface | Controlled LLM access |
-| Data Integration | Clinical + synthetic data | Realistic workload |
-| Observability | Logs, metrics, traces | Visibility into behavior |
-| Detection | Security rules & alerts | Threat awareness |
-| Adversarial Testing | Attack simulation | System hardening |
+| Layer | Focus | Outcome | Status |
+|------|------|--------|--------|
+| AI Gateway | Secure inference interface | Controlled LLM access | ✅ Active |
+| Data Integration | Clinical + synthetic data | Realistic RAG workload | ✅ Chroma + Presidio |
+| Observability | Logs, metrics, dashboards | Visibility into behavior | ✅ Promtail → Loki → Grafana |
+| Detection | Security rules & alerts | Threat awareness | ✅ Wazuh 100100–100401 + MITRE |
+| Adversarial Testing | Attack simulation | System hardening | ⏳ `clinical-ai-redteam` |
+| Compliance | Regulatory mapping | Audit-ready documentation | 🔄 Phase 3.3 |
 
 Each layer builds on the previous one. No layer is isolated.
 
@@ -52,6 +55,8 @@ The starting point is a minimal but secure inference service.
 - Every response is observable
 - Security is enforced at the gateway, not the model
 
+**Repo:** [`clinical-ai-gateway`](https://github.com/MohsenBah/clinical-ai-gateway)
+
 ---
 
 ## 4. Data Layer Integration
@@ -60,17 +65,19 @@ Introduce clinical context using synthetic data.
 
 ### Components
 
-- Synthea-generated patient data
-- OpenEMR as a FHIR-compatible system
+- Synthea-style synthetic patient JSON (`data/synthetic_patients.json`)
 - Ingestion pipeline:
   - PHI detection (Presidio)
-  - Redaction
-  - Embedding generation
-  - Storage (Qdrant / Chroma)
+  - Record-ID-based de-identification for RAG retrieval
+  - Embedding generation (sentence-transformers)
+  - Storage (Chroma)
+- Patient name → record ID lookup for demo queries (e.g. Sarah Johnson → PAT002)
 
 ### Key Constraint
 
 No real patient data is ever used.
+
+**Open / later:** OpenEMR FHIR integration, Qdrant option.
 
 ---
 
@@ -80,11 +87,13 @@ The gateway evolves into a security boundary.
 
 ### Controls Introduced
 
-- Prompt injection filtering
-- Output PHI leakage detection
-- Rate limiting per user/session
-- Structured audit logs (forwarded to SIEM)
-- Service-to-service authentication (mTLS or token-based)
+- ✅ Prompt injection filtering
+- ✅ Rate limiting per user/session
+- ✅ Structured audit logs (query + ingestion events)
+- ✅ Query classification (`medical`, `administrative`, `adversarial`, `unknown`)
+- ✅ Model performance telemetry (tokens, latency)
+- Output PHI leakage detection (Presidio at ingest; output filter placeholder)
+- Service-to-service authentication (mTLS or token-based) — planned
 
 ### Goal
 
@@ -98,16 +107,18 @@ All system activity becomes traceable.
 
 ### Signals Collected
 
-- API requests (input/output metadata)
-- Token usage patterns
-- PHI detection events
-- Authentication events
+- API requests (decision, reason, `query_category`, token counts)
+- Ingestion events (`event_type=ingestion`, success/failure)
+- Block decision latency on allowed and blocked paths
+- PHI probing queries (logged with `query` field for SIEM)
 
 ### Output
 
-- Centralized logs
-- Queryable security events
-- Input for detection engineering
+- `security.log` → Promtail → Loki
+- 3 Grafana dashboards (security overview, prompt injection, RAG ingestion)
+- Input for Wazuh detection engineering
+
+**Docs:** [`clinical-ai-gateway/docs/audit-logging.md`](https://github.com/MohsenBah/clinical-ai-gateway/blob/main/docs/audit-logging.md)
 
 ---
 
@@ -117,21 +128,25 @@ Detection logic is built on top of observed behavior.
 
 ### Detection Targets
 
-- Prompt injection attempts
-- Abnormal prompt size / token usage
-- Repeated PHI-related queries
-- Off-hours access patterns
-- Model or system tampering
+| Scenario | Rule(s) | Status |
+|----------|---------|--------|
+| Prompt injection blocked | 100100 | ✅ |
+| System prompt extraction | 100101 | ✅ |
+| Instruction override | 100102 | ✅ |
+| Repeated probing | 100200 | ✅ |
+| PHI probing | 100300 | ✅ |
+| Abnormal query length | 100400, 100401 | ✅ |
+| Off-hours access | 100500 | ⏳ Planned |
+| RAG data poisoning | TBD | 🔄 Telemetry ready |
+| Model tampering | 100600 | ⏳ Planned |
 
 ### Implementation
 
-- Wazuh rules (primary)
-- Optional Suricata signals
-- Grafana dashboards for visibility
+- Wazuh rules + JSON decoder (primary)
+- Grafana dashboards for investigation
+- MITRE ATLAS mapping (`AML.T0051`, `AML.T0057`)
 
-### Outcome
-
-System becomes actively monitored, not just protected.
+**Repo:** [`clinical-ai-detections`](https://github.com/MohsenBah/clinical-ai-detections)
 
 ---
 
@@ -151,13 +166,15 @@ The system is tested from an attacker’s perspective.
 
 - Garak
 - PyRIT
-- Custom attack scenarios
+- Custom attack scenarios (`clinical-ai-gateway/demo/` scripts as baseline)
 
 ### Output
 
 - Documented findings
 - Mapped to MITRE ATLAS
 - Mitigations implemented and verified
+
+**Repo:** [`clinical-ai-redteam`](https://github.com/MohsenBah/clinical-ai-redteam) — planned
 
 ---
 
@@ -178,7 +195,28 @@ The documentation is part of the deliverable, not an afterthought.
 
 ---
 
-## 10. Operational Constraints
+## 10. Demo and Portfolio Artifacts
+
+The end-to-end story is demonstrated, not only documented.
+
+### Demo Video
+
+**File:** [`docs/demo.webm`](demo.webm) (~2 minutes)
+
+Shows: RAG ingest → clinical query → administrative query → prompt injection (Wazuh 100100–102, 100200) → PHI probing (Wazuh 100300) → audit log evidence.
+
+### Reproducible Scripts
+
+```bash
+# clinical-ai-gateway repo
+./demo/05-run-full-demo.sh
+```
+
+Individual steps: `01-health-check.sh` through `04-phi-probing.sh`.
+
+---
+
+## 11. Operational Constraints
 
 This lab is intentionally designed with real-world limitations:
 
@@ -190,20 +228,34 @@ These constraints are part of the design, not problems to eliminate.
 
 ---
 
-## 11. Success Criteria
+## 12. Success Criteria
 
 The system is considered complete when:
 
-- A clinician can query synthetic patient data through a secured interface
-- All requests are logged, auditable, and observable
-- Security controls actively prevent misuse
-- Detection rules identify abnormal behavior
-- Red team testing produces findings and verified mitigations
-- All components are documented and reproducible
+| Criterion | Status |
+|-----------|--------|
+| Clinician can query synthetic patient data through a secured interface | ✅ |
+| All requests are logged, auditable, and observable | ✅ |
+| Security controls actively prevent misuse | ✅ |
+| Detection rules identify abnormal behavior | ✅ |
+| Demo video shows full pipeline | ✅ [`demo.webm`](demo.webm) |
+| MITRE ATLAS mapping for active rules | ✅ |
+| Compliance matrix (HIPAA / OWASP / NIST) | 🔄 |
+| Red team testing produces findings and verified mitigations | ⏳ |
+| All components documented and reproducible | 🔄 |
 
 ---
 
-## 12. Guiding Principle
+## 13. Current Focus (Phase 3.3+)
+
+1. **Compliance matrix** — `clinical-ai-detections/docs/compliance-matrix.md`
+2. **RAG poisoning detections** — Wazuh rules on ingestion telemetry
+3. **Red team phase** — Garak/PyRIT campaigns in `clinical-ai-redteam`
+4. **Architecture diagrams** — network, data-flow, threat model in `MedSecLab/diagrams/`
+
+---
+
+## 14. Guiding Principle
 
 This is not a collection of tools.
 

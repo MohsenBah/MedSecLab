@@ -9,9 +9,9 @@ The project connects four related GitHub repositories into one clear story: a se
 
 ## Demo Video
 
-End-to-end walkthrough of the clinical AI security pipeline (~2 min):
+End-to-end walkthrough of the clinical AI security pipeline (~2 min).
 
-<video src="docs/demo.webm" controls width="100%"></video>
+https://github.com/user-attachments/assets/e31164a2-6abf-4c0c-8143-fafe04147924
 
 **[Download / watch: `docs/demo.webm`](docs/demo.webm)**[demo-github.webm](https://github.com/user-attachments/assets/e31164a2-6abf-4c0c-8143-fafe04147924)
 
@@ -181,7 +181,7 @@ MedSecLab/
 | Landing repo (MedSecLab) | ✅ Active |
 | Secure clinical AI gateway + RAG | ✅ [`clinical-ai-gateway`](https://github.com/MohsenBah/clinical-ai-gateway) |
 | Wazuh / Grafana detection stack | ✅ [`clinical-ai-detections`](https://github.com/MohsenBah/clinical-ai-detections) |
-| End-to-end demo video | ✅ [`docs/demo.webm`](docs/demo.webm) |
+| End-to-end demo video | ✅ [README embed](https://github.com/user-attachments/assets/e31164a2-6abf-4c0c-8143-fafe04147924) · [`docs/demo.webm`](docs/demo.webm) |
 | MITRE ATLAS rule mapping | ✅ Phase 3.2A complete |
 | Compliance matrix (HIPAA / OWASP / NIST) | 🔄 Phase 3.3 |
 | Structured red-team report | ⏳ [`clinical-ai-redteam`](https://github.com/MohsenBah/clinical-ai-redteam) |

@@ -201,7 +201,8 @@ The end-to-end story is demonstrated, not only documented.
 
 ### Demo Video
 
-**File:** [`docs/demo.webm`](demo.webm) (~2 minutes)
+**Recording:** [GitHub asset](https://github.com/user-attachments/assets/e31164a2-6abf-4c0c-8143-fafe04147924) (embedded in `README.md`)
+
 
 Shows: RAG ingest → clinical query → administrative query → prompt injection (Wazuh 100100–102, 100200) → PHI probing (Wazuh 100300) → audit log evidence.
 

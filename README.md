@@ -101,7 +101,7 @@ Main deliverables:
 - ✅ Example logs, logtest notes, and validation samples
 - ✅ 3 Grafana dashboards (security overview, prompt injection, RAG ingestion)
 - ✅ MITRE ATLAS mapping (`clinical-ai-detections/docs/mitre-atlas-mapping.md`)
-- Compliance matrix (HIPAA / OWASP / NIST) — in progress
+- ✅ Compliance matrix (HIPAA / OWASP / NIST)
 
 ## Track 3: Adversarial Testing and Hardening
 
@@ -182,7 +182,7 @@ MedSecLab/
 | Wazuh / Grafana detection stack | ✅ [`clinical-ai-detections`](https://github.com/MohsenBah/clinical-ai-detections) |
 | End-to-end demo video | ✅ [README embed](https://github.com/user-attachments/assets/e31164a2-6abf-4c0c-8143-fafe04147924) · [`docs/demo.webm`](docs/demo.webm) |
 | MITRE ATLAS rule mapping | ✅ Phase 3.2A complete |
-| Compliance matrix (HIPAA / OWASP / NIST) | 🔄 Phase 3.3 |
+| Compliance matrix (HIPAA / OWASP / NIST) | ✅ [`compliance-matrix.md`](https://github.com/MohsenBah/clinical-ai-detections/blob/main/docs/compliance-matrix.md) |
 | Structured red-team report | ⏳ [`clinical-ai-redteam`](https://github.com/MohsenBah/clinical-ai-redteam) |
 | Architecture diagrams & threat model | ⏳ Planned |
 | Blog-style writeups | ⏳ Planned |

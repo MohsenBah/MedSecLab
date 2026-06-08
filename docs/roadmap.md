@@ -30,7 +30,7 @@ The system is developed in layers, each adding a new dimension:
 | Observability | Logs, metrics, dashboards | Visibility into behavior | ✅ Promtail → Loki → Grafana |
 | Detection | Security rules & alerts | Threat awareness | ✅ Wazuh 100100–100401 + MITRE |
 | Adversarial Testing | Attack simulation | System hardening | ⏳ `clinical-ai-redteam` |
-| Compliance | Regulatory mapping | Audit-ready documentation | 🔄 Phase 3.3 |
+| Compliance | Regulatory mapping | Audit-ready documentation | ✅  |
 
 Each layer builds on the previous one. No layer is isolated.
 
@@ -241,15 +241,15 @@ The system is considered complete when:
 | Detection rules identify abnormal behavior | ✅ |
 | Demo video shows full pipeline | ✅ [`demo.webm`](demo.webm) |
 | MITRE ATLAS mapping for active rules | ✅ |
-| Compliance matrix (HIPAA / OWASP / NIST) | 🔄 |
+| Compliance matrix (HIPAA / OWASP / NIST) | ✅ [`compliance-matrix.md`](https://github.com/MohsenBah/clinical-ai-detections/blob/main/docs/compliance-matrix.md) |
 | Red team testing produces findings and verified mitigations | ⏳ |
 | All components documented and reproducible | 🔄 |
 
 ---
 
-## 13. Current Focus (Phase 3.3+)
+## 13. Current Focus (Phase 3.4+)
 
-1. **Compliance matrix** — `clinical-ai-detections/docs/compliance-matrix.md`
+1. **Validation harness** — automated Wazuh logtest regression
 2. **RAG poisoning detections** — Wazuh rules on ingestion telemetry
 3. **Red team phase** — Garak/PyRIT campaigns in `clinical-ai-redteam`
 4. **Architecture diagrams** — network, data-flow, threat model in `MedSecLab/diagrams/`

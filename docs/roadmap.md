@@ -243,13 +243,14 @@ The system is considered complete when:
 | MITRE ATLAS mapping for active rules | ✅ |
 | Compliance matrix (HIPAA / OWASP / NIST) | ✅ [`compliance-matrix.md`](https://github.com/MohsenBah/clinical-ai-detections/blob/main/docs/compliance-matrix.md) |
 | Red team testing produces findings and verified mitigations | ⏳ |
+| Automated detection validation | ✅ `validate_rules.py --offline` |
 | All components documented and reproducible | 🔄 |
 
 ---
 
-## 13. Current Focus (Phase 3.4+)
+## 13. Current Focus (Phase 4+)
 
-1. **Validation harness** — automated Wazuh logtest regression
+1. **Adversarial testing** — Garak/PyRIT in `clinical-ai-redteam`
 2. **RAG poisoning detections** — Wazuh rules on ingestion telemetry
 3. **Red team phase** — Garak/PyRIT campaigns in `clinical-ai-redteam`
 4. **Architecture diagrams** — network, data-flow, threat model in `MedSecLab/diagrams/`

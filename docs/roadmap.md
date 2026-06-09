@@ -152,29 +152,42 @@ Detection logic is built on top of observed behavior.
 
 ## 8. Adversarial Testing
 
-The system is tested from an attacker’s perspective.
+The system is tested from an attacker’s perspective. **Methodology before tools** — do not lead with Garak/PyRIT.
 
-### Attack Surface
+### Phases
 
-- Prompt injection
-- RAG data poisoning
-- PHI extraction attempts
-- Model extraction
-- API abuse
+| Phase | Focus | Status |
+|-------|-------|--------|
+| 4.1 | Attack methodology, catalog, ROE, `red-team-report-v1.md` | ✅ Complete |
+| 4.2 | Manual payloads (CAI-001–006) | 🔄 In progress |
+| 4.3 | Detection validation (`run_campaign.sh`) | ⏳ Pending |
+| 4.4 | Garak integration | ⏳ Later |
+| 4.5 | PyRIT orchestration | ⏳ Later |
 
-### Tooling
+### Attack Catalog (CAI IDs)
 
-- Garak
-- PyRIT
-- Custom attack scenarios (`clinical-ai-gateway/demo/` scripts as baseline)
+| ID | Category | Status |
+|----|----------|--------|
+| CAI-001 | Ignore previous instructions | Tested |
+| CAI-002 | System prompt extraction | Tested |
+| CAI-003 | PHI probing | Tested |
+| CAI-004 | Administrative privilege abuse | Planned |
+| CAI-005 | Multi-turn injection | Planned |
+| CAI-006 | Encoded injection | Planned |
+
+### Security Story (Testing Methodology)
+
+```
+Attack → Gateway → Audit Log → Detection Rule → Grafana → Wazuh
+```
 
 ### Output
 
-- Documented findings
-- Mapped to MITRE ATLAS
-- Mitigations implemented and verified
+- `docs/red-team-report-v1.md` (executive summary, findings, detection results)
+- Attack catalog mapped to MITRE ATLAS and Wazuh rules
+- Campaign script evolving from `clinical-ai-gateway/demo/05-run-full-demo.sh`
 
-**Repo:** [`clinical-ai-redteam`](https://github.com/MohsenBah/clinical-ai-redteam) — planned
+**Repo:** [`clinical-ai-redteam`](https://github.com/MohsenBah/clinical-ai-redteam)
 
 ---
 
@@ -250,10 +263,20 @@ The system is considered complete when:
 
 ## 13. Current Focus (Phase 4+)
 
-1. **Adversarial testing** — Garak/PyRIT in `clinical-ai-redteam`
-2. **RAG poisoning detections** — Wazuh rules on ingestion telemetry
-3. **Red team phase** — Garak/PyRIT campaigns in `clinical-ai-redteam`
-4. **Architecture diagrams** — network, data-flow, threat model in `MedSecLab/diagrams/`
+1. **Phase 4.2–4.3** — Expand payloads (CAI-004, CAI-006) + `run_campaign.sh`
+2. **Phase 4.1** — ✅ Attack methodology in `clinical-ai-redteam` (catalog, ROE, report v1, `run-demo.sh`)
+3. **Phase 5** — STRIDE threat model (`MedSecLab/docs/threat-model.md`)
+4. **Later** — Garak (4.4), PyRIT (4.5), RAG poisoning Wazuh rules, architecture diagrams
+
+**Portfolio tree:**
+
+```
+MedSecLab
+    ├── clinical-ai-gateway      ✅
+    ├── clinical-ai-detections   ✅
+    ├── clinical-ai-redteam      🔄 build now
+    └── Threat Model + Blog + Demo Videos
+```
 
 ---
 

@@ -159,9 +159,9 @@ The system is tested from an attacker’s perspective. **Methodology before tool
 | Phase | Focus | Status |
 |-------|-------|--------|
 | 4.1 | Attack methodology, catalog, ROE, `red-team-report-v1.md` | ✅ Complete |
-| 4.2 | Manual payloads (CAI-001–006) | 🔄 In progress |
-| 4.3 | Detection validation (`run_campaign.sh`) | ⏳ Pending |
-| 4.4 | Garak integration | ⏳ Later |
+| 4.2 | Manual payloads (CAI-001–006) | ✅ Complete |
+| 4.3 | Detection validation (`run_campaign.sh`) | ✅ Complete |
+| 4.4 | Garak integration | 🔄 Next |
 | 4.5 | PyRIT orchestration | ⏳ Later |
 
 ### Attack Catalog (CAI IDs)
@@ -263,10 +263,10 @@ The system is considered complete when:
 
 ## 13. Current Focus (Phase 4+)
 
-1. **Phase 4.2–4.3** — Expand payloads (CAI-004, CAI-006) + `run_campaign.sh`
-2. **Phase 4.1** — ✅ Attack methodology in `clinical-ai-redteam` (catalog, ROE, report v1, `run-demo.sh`)
-3. **Phase 5** — STRIDE threat model (`MedSecLab/docs/threat-model.md`)
-4. **Later** — Garak (4.4), PyRIT (4.5), RAG poisoning Wazuh rules, architecture diagrams
+1. **Phase 4.4** — Garak integration mapped to CAI IDs
+2. **Phase 5** — STRIDE threat model (`MedSecLab/docs/threat-model.md`)
+3. **Later** — PyRIT (4.5), RAG poisoning Wazuh rules, architecture diagrams
+4. **Done** — Phase 4.1–4.3: methodology, payloads, `run_campaign.sh`
 
 **Portfolio tree:**
 

@@ -161,8 +161,8 @@ The system is tested from an attacker’s perspective. **Methodology before tool
 | 4.1 | Attack methodology, catalog, ROE, `red-team-report-v1.md` | ✅ Complete |
 | 4.2 | Manual payloads (CAI-001–006) | ✅ Complete |
 | 4.3 | Detection validation (`run_campaign.sh`) | ✅ Complete |
-| 4.4 | Garak integration | 🔄 Next |
-| 4.5 | PyRIT orchestration | ⏳ Later |
+| 4.4 | Garak integration | ✅ Complete |
+| 4.5 | PyRIT orchestration | 🔄 Next |
 
 ### Attack Catalog (CAI IDs)
 
@@ -263,10 +263,10 @@ The system is considered complete when:
 
 ## 13. Current Focus (Phase 4+)
 
-1. **Phase 4.4** — Garak integration mapped to CAI IDs
+1. **Phase 4.5** — PyRIT multi-turn orchestration (CAI-005)
 2. **Phase 5** — STRIDE threat model (`MedSecLab/docs/threat-model.md`)
-3. **Later** — PyRIT (4.5), RAG poisoning Wazuh rules, architecture diagrams
-4. **Done** — Phase 4.1–4.3: methodology, payloads, `run_campaign.sh`
+3. **Later** — RAG poisoning Wazuh rules, architecture diagrams
+4. **Done** — Phase 4.1–4.4: methodology, payloads, `run_campaign.sh`, Garak
 
 **Portfolio tree:**
 

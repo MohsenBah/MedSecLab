@@ -67,6 +67,15 @@ This is a **design and portfolio artifact**, not a production risk assessment.
 
 ## 3. STRIDE Analysis
 
+**Status legend:**
+
+| Symbol | Meaning |
+|--------|---------|
+| ✅ | Mitigated and tested (control + detection verified) |
+| 🟡 | Partial — control or detection exists but is incomplete, or constrained to the lab |
+| ⚠️ | Known limitation, accepted for the lab scope (e.g. no API authentication) |
+| ❌ | Open gap — documented residual risk with a recommended mitigation |
+
 ### 3.1 Spoofing (identity)
 
 | Threat | Description | Likelihood | Impact | Controls | Detection | Status |

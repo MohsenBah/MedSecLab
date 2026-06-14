@@ -87,10 +87,10 @@ This is a **design and portfolio artifact**, not a production risk assessment.
 |--------|-------------|------------|--------|----------|-----------|--------|
 | T-01 | RAG poisoning via malicious ingest | Medium | High | Presidio at ingest; `clear_existing` option | Ingestion telemetry only | Documented |
 | T-02 | Prompt injection alters model behavior | High | High | Input blocklist (`input_validation.py`) | **100100–100102** | ✅ Tested CAI-001/002 |
-| T-03 | Encoded injection bypasses blocklist | Medium | High | Literal string match only | None today | ❌ CAI-006 gap |
+| T-03 | Encoded injection bypasses blocklist | Medium | High | URL/Base64 normalization before blocklist | **100100–100102** (`decode_method`) | ✅ Remediated CAI-006 |
 | T-04 | Tamper with audit logs | Low | High | File permissions in container | Immutable log shipping (Loki) | 🟡 Lab only |
 
-**Red team:** CAI-006 confirmed encoding bypass. CAI-001/002 blocked at gateway.
+**Red team:** CAI-006 encoding bypass found and remediated (input normalization). CAI-001/002 blocked at gateway.
 
 ---
 
@@ -138,7 +138,7 @@ This is a **design and portfolio artifact**, not a production risk assessment.
 | Threat | Description | Likelihood | Impact | Controls | Detection | Status |
 |--------|-------------|------------|--------|----------|-----------|--------|
 | E-01 | Instruction override / jailbreak | High | High | Blocklist | **100100**, **100102** | ✅ CAI-001 |
-| E-02 | Bypass safety via encoding | Medium | High | None | None | ❌ CAI-006 |
+| E-02 | Bypass safety via encoding | Medium | High | URL/Base64 normalization | **100100**, **100102** | ✅ Remediated CAI-006 |
 | E-03 | Administrative privilege abuse | Medium | High | No scope separation | None (PHI hybrid → **100300** only) | ❌ CAI-004 |
 | E-04 | Multi-turn jailbreak (stateful) | Low | Medium | Stateless gateway | **100200** (repeated blocks only) | 🟡 CAI-005 |
 
@@ -155,7 +155,7 @@ This is a **design and portfolio artifact**, not a production risk assessment.
 | CAI-003 | I, R | I-02, R-03 | Allowed | 100300 | ✅ |
 | CAI-004 | I, E, S | I-04, E-03, S-03 | Allowed | Partial | ⚠️ Gap |
 | CAI-005 | D, E | D-02, E-04 | Blocked | 100100, 100200 | ✅ |
-| CAI-006 | T, E | T-03, E-02 | Allowed | None | ❌ Gap |
+| CAI-006 | T, E | T-03, E-02 | Blocked | 100100, 100102 | ✅ Remediated |
 
 Source: [`clinical-ai-redteam/docs/red-team-report-v1.md`](https://github.com/MohsenBah/clinical-ai-redteam/blob/main/docs/red-team-report-v1.md)
 
@@ -168,6 +168,7 @@ Source: [`clinical-ai-redteam/docs/red-team-report-v1.md`](https://github.com/Mo
 | Control | Mitigates | STRIDE |
 |---------|-----------|--------|
 | Input validation blocklist | T-02, E-01, I-01 | T, E, I |
+| Input normalization (URL/Base64 decode) | T-03, E-02 | T, E |
 | Presidio at ingest | I-02, T-01 | I, T |
 | Rate limiting (placeholder) | D-01 | D |
 | Patient ID indirection in RAG | I-03 | I |
@@ -185,8 +186,8 @@ Source: [`clinical-ai-redteam/docs/red-team-report-v1.md`](https://github.com/Mo
 
 | Gap | CAI | Priority | Recommended mitigation |
 |-----|-----|----------|------------------------|
-| Encoded injection bypass | CAI-006 | High | Normalize/decode before blocklist |
 | Admin abuse undetected | CAI-004 | Medium | Admin-scope rules or gateway RBAC |
+| Nested / multi-layer encoding | CAI-006 | Low | Single-layer URL/Base64 remediated; ML classifier for deeper obfuscation |
 | RAG poisoning rules | T-01 | Medium | Wazuh rules on ingestion anomalies |
 | No API authentication | S-01, S-03 | High | API keys / OIDC / mTLS |
 | Output-side PHI filter | I-02 | Medium | Strengthen `output_filter` |

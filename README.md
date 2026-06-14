@@ -1,11 +1,51 @@
 
 # MedSecLab
 
-**MedSecLab** is a portfolio-grade reference architecture for securely deploying clinical AI applications in a simulated healthcare environment.
+> **Securing clinical AI end-to-end — attack → gateway → audit log → SIEM detection → dashboard — using only synthetic healthcare data.**
 
-The project connects four related GitHub repositories into one clear story: a security-hardened clinical AI gateway, detection engineering for LLM workloads, adversarial testing, and the homelab infrastructure that ties everything together.
+![Detections CI](https://github.com/MohsenBah/clinical-ai-detections/actions/workflows/validate-detections.yml/badge.svg)
+![Synthetic data only](https://img.shields.io/badge/data-synthetic%20only-brightgreen)
+![Stack](https://img.shields.io/badge/stack-FastAPI%20%C2%B7%20Ollama%20%C2%B7%20Chroma%20%C2%B7%20Wazuh%20%C2%B7%20Grafana-blue)
+![Frameworks](https://img.shields.io/badge/mapped-MITRE%20ATLAS%20%C2%B7%20STRIDE%20%C2%B7%20HIPAA%20%C2%B7%20OWASP%20LLM-orange)
 
-> Goal: build a realistic clinical AI security lab using only synthetic healthcare data, then document the architecture, controls, detections, red-team findings, and lessons learned.
+**MedSecLab** is a portfolio-grade reference architecture for securely deploying clinical AI applications in a simulated healthcare environment. Four focused repositories tell one story: a security-hardened clinical AI gateway, detection engineering for LLM workloads, a structured red-team program, and the threat model that ties them together.
+
+## At a Glance
+
+| | |
+|---|---|
+| **Secure gateway** | FastAPI + RAG (Chroma), Presidio de-identification, structured audit logging |
+| **Detections** | 7 Wazuh rules (100100–100401) mapped to MITRE ATLAS, 3 Grafana dashboards |
+| **Red team** | 6 attack classes (CAI-001–006): **5 detected, 1 partial, 1 gap found & remediated** |
+| **Validation** | 11 detection case-groups pass in CI (`validate_rules.py --offline`) |
+| **Threat model** | STRIDE across gateway / RAG / LLM / SIEM, every finding mapped to a control |
+| **Frameworks** | MITRE ATLAS · STRIDE · HIPAA §164.312 · OWASP LLM Top 10 · NIST AI RMF |
+
+**Highlight — full remediation cycle:** the red team found an encoded-injection bypass (CAI-006), the gateway was patched to normalize URL/Base64 input before the blocklist, and both variants were retested to confirm they now block and alert. [See the story →](docs/portfolio-story.md)
+
+## Why This Matters
+
+Healthcare is adopting LLM and RAG systems faster than the security tooling around them matures. These systems expose three high-risk surfaces at once — user prompts (injection, jailbreaks), retrieval corpora (PHI exposure), and audit trails (required for HIPAA investigations). Most homelab projects stop at installing tools. MedSecLab instead demonstrates a defensible, testable security pipeline for clinical AI and answers concrete questions:
+
+- How is a local clinical AI system exposed safely?
+- How are synthetic patient records queried without leaking PHI?
+- How are prompt injection and abnormal LLM usage logged and detected?
+- How are red-team findings mapped to real mitigations — and verified after a fix?
+
+## Run It in 3 Commands
+
+```bash
+# 1. Start the secure gateway (FastAPI + Ollama + Chroma)
+cd clinical-ai-gateway && docker compose up -d
+
+# 2. Run the full red-team campaign against it
+cd ../clinical-ai-redteam && ./scripts/run_campaign.sh
+
+# 3. Validate detections offline (no SIEM required)
+cd ../clinical-ai-detections && python3 scripts/validate_rules.py --offline
+```
+
+Architecture: [network](diagrams/network.md) · [data flow](diagrams/data-flow.md) · Narrative: [portfolio story](docs/portfolio-story.md) · [STRIDE threat model](docs/threat-model.md)
 
 ## Demo Video
 
@@ -24,18 +64,6 @@ The demo covers:
 5. Structured audit logging in `security.log`
 
 Reproducible scripts: [`clinical-ai-gateway/demo/`](https://github.com/MohsenBah/clinical-ai-gateway/tree/main/demo) (`05-run-full-demo.sh`)
-
-## Why This Exists
-
-Most homelab projects stop at tool installation: Wazuh, Kasm, OpenEMR, Ollama, or Suricata.
-
-MedSecLab is different. The focus is not simply installing tools. The focus is building a defensible security story around clinical AI:
-
-- How should a local clinical AI system be exposed safely?
-- How can synthetic patient records be queried without leaking PHI?
-- How can prompt injection and abnormal LLM usage be logged and detected?
-- How can red-team findings be mapped to real mitigations?
-- How can a small lab simulate enterprise-style healthcare AI security?
 
 ## Portfolio Repositories
 

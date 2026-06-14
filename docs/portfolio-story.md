@@ -53,8 +53,18 @@ Every tested CAI ID traces through this pipeline with evidence in `red-team-repo
 | Direct injection (CAI-001/002) | Blocked | Wazuh 100100–102 |
 | PHI probing (CAI-003) | Allowed | Wazuh 100300 |
 | Repeated blocks (CAI-005) | Blocked | Wazuh 100200 |
-| Encoded injection (CAI-006) | Allowed | Documented in STRIDE + report |
-| Admin abuse (CAI-004) | Allowed | Partial (PHI hybrid only) |
+| Encoded injection (CAI-006) | Blocked (after remediation) | Wazuh 100100–102 |
+| Admin abuse (CAI-004) | Allowed | Partial (PHI hybrid only) — open gap |
+
+## Remediation Cycle (CAI-006)
+
+The red team didn't just find gaps — it closed one end-to-end:
+
+1. **Found** — Base64 and URL-encoded overrides bypassed the literal blocklist (HTTP 200, no alert).
+2. **Fixed** — `validate_input()` now decodes URL/Base64 variants before the blocklist check and records a `decode_method` audit field.
+3. **Retested** — gateway unit tests + the `blocked-encoded-injection` detection case pass; both variants now return HTTP 400 and fire Wazuh 100100/100102.
+
+This is the full find → fix → verify loop a security engineer is expected to own.
 
 ## Reproduce It
 

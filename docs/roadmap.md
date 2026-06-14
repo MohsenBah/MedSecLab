@@ -29,7 +29,7 @@ The system is developed in layers, each adding a new dimension:
 | Data Integration | Clinical + synthetic data | Realistic RAG workload | ✅ Chroma + Presidio |
 | Observability | Logs, metrics, dashboards | Visibility into behavior | ✅ Promtail → Loki → Grafana |
 | Detection | Security rules & alerts | Threat awareness | ✅ Wazuh 100100–100401 + MITRE |
-| Adversarial Testing | Attack simulation | System hardening | ⏳ `clinical-ai-redteam` |
+| Adversarial Testing | Attack simulation | System hardening | ✅ `clinical-ai-redteam` |
 | Compliance | Regulatory mapping | Audit-ready documentation | ✅  |
 
 Each layer builds on the previous one. No layer is isolated.
@@ -256,17 +256,23 @@ The system is considered complete when:
 | Demo video shows full pipeline | ✅ [`demo.webm`](demo.webm) |
 | MITRE ATLAS mapping for active rules | ✅ |
 | Compliance matrix (HIPAA / OWASP / NIST) | ✅ [`compliance-matrix.md`](https://github.com/MohsenBah/clinical-ai-detections/blob/main/docs/compliance-matrix.md) |
-| Red team testing produces findings and verified mitigations | ⏳ |
+| Red team testing produces findings and verified mitigations | ✅ [`red-team-report-v1`](https://github.com/MohsenBah/clinical-ai-redteam/blob/main/docs/red-team-report-v1.md) |
+| STRIDE threat model | ✅ [`threat-model.md`](threat-model.md) |
 | Automated detection validation | ✅ `validate_rules.py --offline` |
-| All components documented and reproducible | 🔄 |
+| All components documented and reproducible | ✅ |
 
 ---
 
-## 13. Current Focus (Phase 4+)
+## 13. Current Focus (Post Phase 5)
 
-1. **Phase 5** — STRIDE threat model (`MedSecLab/docs/threat-model.md`)
-2. **Later** — RAG poisoning Wazuh rules, architecture diagrams
-3. **Done** — Phase 4.1–4.5: methodology, campaign, Garak, PyRIT multi-turn
+1. **Architecture diagrams** — `MedSecLab/diagrams/` (network, data-flow)
+2. **Close documented gaps** — CAI-006 encoding, CAI-004 admin abuse, RAG poisoning rules
+3. **Blog / writeups** — portfolio narrative
+
+**Completed:**
+
+- Phase 4 — red team methodology, campaign, Garak, PyRIT
+- Phase 5 — STRIDE threat model [`threat-model.md`](threat-model.md)
 
 **Portfolio tree:**
 
@@ -274,8 +280,8 @@ The system is considered complete when:
 MedSecLab
     ├── clinical-ai-gateway      ✅
     ├── clinical-ai-detections   ✅
-    ├── clinical-ai-redteam      🔄 build now
-    └── Threat Model + Blog + Demo Videos
+    ├── clinical-ai-redteam      ✅
+    └── Threat Model + Blog + Demo Videos  ✅ threat model · ⏳ blog
 ```
 
 ---

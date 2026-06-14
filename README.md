@@ -46,7 +46,7 @@ MedSecLab is the umbrella repo. The technical work is split into focused reposit
 | [`MedSecLab`](https://github.com/MohsenBah/MedSecLab) | Portfolio landing page, architecture, roadmap, demo video | Active |
 | [`clinical-ai-gateway`](https://github.com/MohsenBah/clinical-ai-gateway) | Secure FastAPI gateway for clinical LLM/RAG workloads | Active |
 | [`clinical-ai-detections`](https://github.com/MohsenBah/clinical-ai-detections) | Wazuh rules, Grafana dashboards, MITRE ATLAS mapping | Active |
-| [`clinical-ai-redteam`](https://github.com/MohsenBah/clinical-ai-redteam) | Garak/PyRIT testing methodology, findings, mitigations | Planned |
+| [`clinical-ai-redteam`](https://github.com/MohsenBah/clinical-ai-redteam) | Attack methodology, campaigns, Garak/PyRIT, red team report | Active |
 
 ## Main Project Tracks
 
@@ -73,7 +73,7 @@ Main deliverables:
 
 - ✅ Working secure AI gateway with RAG (Chroma, Presidio, Ollama)
 - ✅ Demo video and reproducible demo scripts
-- Threat model using STRIDE and optionally LINDDUN
+- ✅ Threat model using STRIDE — [`docs/threat-model.md`](docs/threat-model.md)
 - Security controls mapped to OWASP LLM Top 10, NIST AI RMF, and HIPAA Security Rule technical safeguards
 
 ## Track 2: SOC Detection Engineering for AI Workloads
@@ -123,10 +123,9 @@ clinical-ai-redteam
 
 Main deliverables:
 
-- Red-team methodology
-- Lab-only test scenarios
-- Findings report
-- MITRE ATLAS mapping
+- ✅ Red-team methodology, campaign, Garak, PyRIT
+- ✅ Findings report — [`clinical-ai-redteam/docs/red-team-report-v1.md`](https://github.com/MohsenBah/clinical-ai-redteam/blob/main/docs/red-team-report-v1.md)
+- ✅ MITRE ATLAS mapping (via detections + attack catalog)
 - Mitigations and retest results
 
 ## Planned Lab Architecture
@@ -148,8 +147,9 @@ The final lab simulates a small healthcare provider network. It does not need to
 MedSecLab/
 ├── README.md
 ├── docs/
-│   ├── demo.webm          # End-to-end portfolio demo (~2 min)
+│   ├── demo.webm          
 │   ├── roadmap.md
+│   ├── threat-model.md    
 │   ├── lessons-learned.md
 │   ├── compliance-coverage.md
 │   └── runbook.md
@@ -183,6 +183,7 @@ MedSecLab/
 | End-to-end demo video | ✅ [README embed](https://github.com/user-attachments/assets/e31164a2-6abf-4c0c-8143-fafe04147924) · [`docs/demo.webm`](docs/demo.webm) |
 | MITRE ATLAS rule mapping | ✅ Phase 3.2A complete |
 | Compliance matrix (HIPAA / OWASP / NIST) | ✅ [`compliance-matrix.md`](https://github.com/MohsenBah/clinical-ai-detections/blob/main/docs/compliance-matrix.md) |
-| Structured red-team report | ⏳ [`clinical-ai-redteam`](https://github.com/MohsenBah/clinical-ai-redteam) |
-| Architecture diagrams & threat model | ⏳ Planned |
+| Structured red-team report | ✅ [`red-team-report-v1`](https://github.com/MohsenBah/clinical-ai-redteam/blob/main/docs/red-team-report-v1.md) |
+| STRIDE threat model | ✅ [`docs/threat-model.md`](docs/threat-model.md) |
+| Architecture diagrams | ⏳ Planned (`diagrams/`) |
 | Blog-style writeups | ⏳ Planned |

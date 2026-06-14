@@ -4,7 +4,7 @@ This document outlines how the system is built, expanded, and validated over tim
 
 It is not a task checklist. It captures architectural intent, sequencing decisions, and why each layer exists.
 
-**Last updated:** June 2026 — demo video recorded; Phases 3.1A–3.2A complete across gateway and detections repos.
+**Last updated:** June 2026 — Phases 1–5 complete across all portfolio repos.
 
 ---
 
@@ -77,8 +77,6 @@ Introduce clinical context using synthetic data.
 
 No real patient data is ever used.
 
-**Open / later:** OpenEMR FHIR integration, Qdrant option.
-
 ---
 
 ## 5. Security Controls (Gateway Hardening)
@@ -93,7 +91,7 @@ The gateway evolves into a security boundary.
 - ✅ Query classification (`medical`, `administrative`, `adversarial`, `unknown`)
 - ✅ Model performance telemetry (tokens, latency)
 - Output PHI leakage detection (Presidio at ingest; output filter placeholder)
-- Service-to-service authentication (mTLS or token-based) — planned
+- Service-to-service authentication (mTLS or token-based) — not implemented in lab
 
 ### Goal
 
@@ -136,9 +134,9 @@ Detection logic is built on top of observed behavior.
 | Repeated probing | 100200 | ✅ |
 | PHI probing | 100300 | ✅ |
 | Abnormal query length | 100400, 100401 | ✅ |
-| Off-hours access | 100500 | ⏳ Planned |
-| RAG data poisoning | TBD | 🔄 Telemetry ready |
-| Model tampering | 100600 | ⏳ Planned |
+| Off-hours access | 100500 | Not deployed |
+| RAG data poisoning | — | Telemetry only |
+| Model tampering | 100600 | Not deployed |
 
 ### Implementation
 
@@ -152,7 +150,7 @@ Detection logic is built on top of observed behavior.
 
 ## 8. Adversarial Testing
 
-The system is tested from an attacker’s perspective. **Methodology before tools** — do not lead with Garak/PyRIT.
+The system is tested from an attacker’s perspective.
 
 ### Phases
 
@@ -163,7 +161,7 @@ The system is tested from an attacker’s perspective. **Methodology before tool
 | 4.3 | Detection validation (`run_campaign.sh`) | ✅ Complete |
 | 4.4 | Garak integration | ✅ Complete |
 | 4.5 | PyRIT / multi-turn orchestration | ✅ Complete |
-| 5 | STRIDE threat model | 🔄 Next |
+| 5 | STRIDE threat model | ✅ Complete |
 
 ### Attack Catalog (CAI IDs)
 
@@ -172,9 +170,9 @@ The system is tested from an attacker’s perspective. **Methodology before tool
 | CAI-001 | Ignore previous instructions | Tested |
 | CAI-002 | System prompt extraction | Tested |
 | CAI-003 | PHI probing | Tested |
-| CAI-004 | Administrative privilege abuse | Planned |
-| CAI-005 | Multi-turn injection | Planned |
-| CAI-006 | Encoded injection | Planned |
+| CAI-004 | Administrative privilege abuse | Tested |
+| CAI-005 | Multi-turn injection | Tested |
+| CAI-006 | Encoded injection | Tested |
 
 ### Security Story (Testing Methodology)
 
@@ -186,7 +184,7 @@ Attack → Gateway → Audit Log → Detection Rule → Grafana → Wazuh
 
 - `docs/red-team-report-v1.md` (executive summary, findings, detection results)
 - Attack catalog mapped to MITRE ATLAS and Wazuh rules
-- Campaign script evolving from `clinical-ai-gateway/demo/05-run-full-demo.sh`
+- Campaign script: `scripts/run_campaign.sh`
 
 **Repo:** [`clinical-ai-redteam`](https://github.com/MohsenBah/clinical-ai-redteam)
 
@@ -263,16 +261,12 @@ The system is considered complete when:
 
 ---
 
-## 13. Current Focus (Post Phase 5)
+## 13. Portfolio Artifacts
 
-1. **Architecture diagrams** — `MedSecLab/diagrams/` (network, data-flow)
-2. **Close documented gaps** — CAI-006 encoding, CAI-004 admin abuse, RAG poisoning rules
-3. **Blog / writeups** — portfolio narrative
-
-**Completed:**
-
-- Phase 4 — red team methodology, campaign, Garak, PyRIT
-- Phase 5 — STRIDE threat model [`threat-model.md`](threat-model.md)
+- Architecture diagrams — [`diagrams/`](../diagrams/) (network, data-flow)
+- Portfolio narrative — [`portfolio-story.md`](portfolio-story.md)
+- STRIDE threat model — [`threat-model.md`](threat-model.md)
+- Demo video — [`README.md`](../README.md)
 
 **Portfolio tree:**
 
@@ -281,7 +275,7 @@ MedSecLab
     ├── clinical-ai-gateway      ✅
     ├── clinical-ai-detections   ✅
     ├── clinical-ai-redteam      ✅
-    └── Threat Model + Blog + Demo Videos  ✅ threat model · ⏳ blog
+    └── Threat Model + Portfolio Story + Demo Videos  ✅
 ```
 
 ---

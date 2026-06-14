@@ -54,14 +54,13 @@ MedSecLab is the umbrella repo. The technical work is split into focused reposit
 
 **Story:** I built and secured an end-to-end RAG pipeline that lets clinicians query synthetic patient records using a local LLM, with PHI redaction, audit logging, and OWASP LLM Top 10 controls.
 
-Planned components:
+Components:
 
-- **Data layer:** OpenEMR seeded with Synthea synthetic patient data
-- **Ingestion:** Synthea/FHIR records processed through Microsoft Presidio
-- **Vector database:** Qdrant or Chroma
-- **Inference:** Ollama or vLLM serving a local model
-- **Gateway:** FastAPI service with validation, rate limiting, output filtering, and audit logging
-- **Access layer:** Streamlit or React frontend, optionally accessed through Kasm
+- **Data layer:** Synthea synthetic patient JSON (`data/synthetic_patients.json`)
+- **Ingestion:** Presidio anonymization → Chroma vector store
+- **Inference:** Ollama local LLM
+- **Gateway:** FastAPI with validation, rate limiting, output filtering, and audit logging
+- **Access:** Demo scripts and curl (Streamlit/Kasm documented as homelab extensions)
 
 Primary repository:
 
@@ -80,14 +79,12 @@ Main deliverables:
 
 **Story:** I developed and tested custom Wazuh rules that detect prompt injection attempts, model exfiltration behavior, and anomalous API usage patterns specific to clinical LLM deployments.
 
-Planned detections:
+Detections implemented:
 
-- Prompt injection signatures
-- Role override and jailbreak-style attempts
-- Unusual prompt/token volume
-- Off-hours access to clinical AI endpoints
-- Repeated PHI redaction triggers from one user
-- Model file access or tampering anomalies
+- Prompt injection signatures (100100–100102)
+- Role override and jailbreak-style attempts (100100, 100200)
+- Unusual prompt/token volume (100400, 100401)
+- PHI probing from clinical AI endpoints (100300)
 
 Primary repository:
 
@@ -107,13 +104,12 @@ Main deliverables:
 
 **Story:** I conducted a structured red-team exercise against my own clinical AI deployment, documented findings using MITRE ATLAS, implemented mitigations, and retested.
 
-Planned testing:
+Testing delivered:
 
-- Garak LLM vulnerability scans
-- PyRIT scenarios
-- Manual prompt injection tests
-- PHI leakage attempts
-- Model extraction and abuse-pattern testing against the lab only
+- Garak LLM vulnerability scans mapped to CAI IDs
+- PyRIT / stdlib multi-turn scenarios (CAI-005)
+- Manual prompt injection tests (CAI-001–006)
+- PHI leakage attempts (CAI-003)
 
 Primary repository:
 
@@ -126,9 +122,9 @@ Main deliverables:
 - ✅ Red-team methodology, campaign, Garak, PyRIT
 - ✅ Findings report — [`clinical-ai-redteam/docs/red-team-report-v1.md`](https://github.com/MohsenBah/clinical-ai-redteam/blob/main/docs/red-team-report-v1.md)
 - ✅ MITRE ATLAS mapping (via detections + attack catalog)
-- Mitigations and retest results
+- ✅ Mitigations and retest results documented in red team report
 
-## Planned Lab Architecture
+## Lab Architecture
 
 The final lab simulates a small healthcare provider network. It does not need to run all services at the same time.
 
@@ -149,7 +145,8 @@ MedSecLab/
 ├── docs/
 │   ├── demo.webm          
 │   ├── roadmap.md
-│   ├── threat-model.md    
+│   ├── threat-model.md
+│   ├── portfolio-story.md
 │   ├── lessons-learned.md
 │   ├── compliance-coverage.md
 │   └── runbook.md
@@ -158,9 +155,8 @@ MedSecLab/
 │   ├── ansible/
 │   └── networking/
 ├── diagrams/
-│   ├── network.png
-│   ├── data-flow.png
-│   └── threat-model.png
+│   ├── network.md
+│   └── data-flow.md
 └── related-repos.md
 ```
 
@@ -185,5 +181,5 @@ MedSecLab/
 | Compliance matrix (HIPAA / OWASP / NIST) | ✅ [`compliance-matrix.md`](https://github.com/MohsenBah/clinical-ai-detections/blob/main/docs/compliance-matrix.md) |
 | Structured red-team report | ✅ [`red-team-report-v1`](https://github.com/MohsenBah/clinical-ai-redteam/blob/main/docs/red-team-report-v1.md) |
 | STRIDE threat model | ✅ [`docs/threat-model.md`](docs/threat-model.md) |
-| Architecture diagrams | ⏳ Planned (`diagrams/`) |
-| Blog-style writeups | ⏳ Planned |
+| Architecture diagrams | ✅ [`diagrams/`](diagrams/) |
+| Portfolio writeup | ✅ [`docs/portfolio-story.md`](docs/portfolio-story.md) |

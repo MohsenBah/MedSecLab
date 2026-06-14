@@ -77,7 +77,7 @@ This is a **design and portfolio artifact**, not a production risk assessment.
 
 **Red team:** CAI-004 admin abuse — no identity verification that caller is authorized for admin queries.
 
-**Gap:** HIPAA §164.312(d) authentication not implemented. Planned: API keys, mTLS, or OIDC.
+**Residual risk:** HIPAA §164.312(d) authentication not implemented in the lab gateway.
 
 ---
 
@@ -85,7 +85,7 @@ This is a **design and portfolio artifact**, not a production risk assessment.
 
 | Threat | Description | Likelihood | Impact | Controls | Detection | Status |
 |--------|-------------|------------|--------|----------|-----------|--------|
-| T-01 | RAG poisoning via malicious ingest | Medium | High | Presidio at ingest; `clear_existing` option | Ingestion telemetry; rules TBD | ⚠️ Gap |
+| T-01 | RAG poisoning via malicious ingest | Medium | High | Presidio at ingest; `clear_existing` option | Ingestion telemetry only | Documented |
 | T-02 | Prompt injection alters model behavior | High | High | Input blocklist (`input_validation.py`) | **100100–100102** | ✅ Tested CAI-001/002 |
 | T-03 | Encoded injection bypasses blocklist | Medium | High | Literal string match only | None today | ❌ CAI-006 gap |
 | T-04 | Tamper with audit logs | Low | High | File permissions in container | Immutable log shipping (Loki) | 🟡 Lab only |
@@ -114,7 +114,7 @@ This is a **design and portfolio artifact**, not a production risk assessment.
 | I-02 | PHI leakage via LLM answers | Medium | Critical | Presidio at ingest; patient ID indirection | **100300** on query keywords | 🟡 CAI-003 |
 | I-03 | Synthetic PHI in RAG responses | Medium | Medium | Name→ID lookup; redacted ingest | Query-side detection only | 🟡 Partial |
 | I-04 | Admin/config exfiltration via query | Medium | High | None for admin-scope | None dedicated | ❌ CAI-004 gap |
-| I-05 | Model extraction / weights access | Low | Medium | No direct Ollama exposure | Planned 100600 | ⏳ |
+| I-05 | Model extraction / weights access | Low | Medium | No direct Ollama exposure | Not deployed (100600) | Documented |
 
 **Red team:** CAI-003 allowed at gateway, detected at SIEM. CAI-004 pure admin abuse undetected.
 
@@ -250,18 +250,7 @@ audit (event_type=ingestion) ──► Grafana ingestion dashboard
 
 ---
 
-## 9. Future Work
-
-1. Close CAI-006 — input normalization layer
-2. Close CAI-004 — admin-scope detection or RBAC
-3. RAG poisoning Wazuh rules on `event_type=ingestion`
-4. API authentication (S-01, HIPAA 164.312(d))
-5. Architecture diagrams in `MedSecLab/diagrams/` (network, data-flow)
-6. LINDDUN privacy extension (optional, for PHI-focused portfolio depth)
-
----
-
-## 10. References
+## 9. References
 
 | Document | Repository |
 |----------|------------|

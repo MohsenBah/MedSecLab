@@ -251,7 +251,7 @@ The system is considered complete when:
 | All requests are logged, auditable, and observable | ✅ |
 | Security controls actively prevent misuse | ✅ |
 | Detection rules identify abnormal behavior | ✅ |
-| Demo video shows full pipeline | ✅ [`demo.webm`](demo.webm) |
+| Demo video shows full pipeline | ✅ [README embed](https://github.com/user-attachments/assets/e31164a2-6abf-4c0c-8143-fafe04147924) |
 | MITRE ATLAS mapping for active rules | ✅ |
 | Compliance matrix (HIPAA / OWASP / NIST) | ✅ [`compliance-matrix.md`](https://github.com/MohsenBah/clinical-ai-detections/blob/main/docs/compliance-matrix.md) |
 | Red team testing produces findings and verified mitigations | ✅ [`red-team-report-v1`](https://github.com/MohsenBah/clinical-ai-redteam/blob/main/docs/red-team-report-v1.md) |

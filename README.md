@@ -143,22 +143,15 @@ The final lab simulates a small healthcare provider network. It does not need to
 MedSecLab/
 ├── README.md
 ├── docs/
-│   ├── demo.webm          
 │   ├── roadmap.md
 │   ├── threat-model.md
-│   ├── portfolio-story.md
-│   ├── lessons-learned.md
-│   ├── compliance-coverage.md
-│   └── runbook.md
-├── infra/
-│   ├── proxmox/
-│   ├── ansible/
-│   └── networking/
-├── diagrams/
-│   ├── network.md
-│   └── data-flow.md
-└── related-repos.md
+│   └── portfolio-story.md
+└── diagrams/
+    ├── network.md
+    └── data-flow.md
 ```
+
+The end-to-end demo video is published as a GitHub asset and embedded above; it is not stored in the repository.
 
 
 ## Important Rules
@@ -176,8 +169,8 @@ MedSecLab/
 | Landing repo (MedSecLab) | ✅ Active |
 | Secure clinical AI gateway + RAG | ✅ [`clinical-ai-gateway`](https://github.com/MohsenBah/clinical-ai-gateway) |
 | Wazuh / Grafana detection stack | ✅ [`clinical-ai-detections`](https://github.com/MohsenBah/clinical-ai-detections) |
-| End-to-end demo video | ✅ [README embed](https://github.com/user-attachments/assets/e31164a2-6abf-4c0c-8143-fafe04147924) · [`docs/demo.webm`](docs/demo.webm) |
-| MITRE ATLAS rule mapping | ✅ Phase 3.2A complete |
+| End-to-end demo video | ✅ [README embed](https://github.com/user-attachments/assets/e31164a2-6abf-4c0c-8143-fafe04147924) |
+| MITRE ATLAS rule mapping | ✅ [`mitre-atlas-mapping.md`](https://github.com/MohsenBah/clinical-ai-detections/blob/main/docs/mitre-atlas-mapping.md) |
 | Compliance matrix (HIPAA / OWASP / NIST) | ✅ [`compliance-matrix.md`](https://github.com/MohsenBah/clinical-ai-detections/blob/main/docs/compliance-matrix.md) |
 | Structured red-team report | ✅ [`red-team-report-v1`](https://github.com/MohsenBah/clinical-ai-redteam/blob/main/docs/red-team-report-v1.md) |
 | STRIDE threat model | ✅ [`docs/threat-model.md`](docs/threat-model.md) |

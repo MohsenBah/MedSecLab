@@ -15,13 +15,13 @@
 | | |
 |---|---|
 | **Secure gateway** | FastAPI + RAG (Chroma), Presidio de-identification, structured audit logging |
-| **Detections** | 7 Wazuh rules (100100–100401) mapped to MITRE ATLAS, 3 Grafana dashboards |
-| **Red team** | 6 attack classes (CAI-001–006): **5 detected, 1 partial, 1 gap found & remediated** |
-| **Validation** | 11 detection case-groups pass in CI (`validate_rules.py --offline`) |
+| **Detections** | 10 Wazuh rules (100100–100401) mapped to MITRE ATLAS, 3 Grafana dashboards |
+| **Red team** | 6 attack classes (CAI-001–006): **all detected; 2 gaps found & remediated (CAI-004, CAI-006)** |
+| **Validation** | 14 detection case-groups pass in CI (`validate_rules.py --offline`) |
 | **Threat model** | STRIDE across gateway / RAG / LLM / SIEM, every finding mapped to a control |
 | **Frameworks** | MITRE ATLAS · STRIDE · HIPAA §164.312 · OWASP LLM Top 10 · NIST AI RMF |
 
-**Highlight — full remediation cycle:** the red team found an encoded-injection bypass (CAI-006), the gateway was patched to normalize URL/Base64 input before the blocklist, and both variants were retested to confirm they now block and alert. [See the story →](docs/portfolio-story.md)
+**Highlight — full remediation cycle:** the red team found two gaps and closed both — an encoded-injection bypass (CAI-006, fixed with URL/Base64 normalization) and unrestricted admin credential/config exfiltration (CAI-004, fixed with an admin-scope blocklist + Wazuh rule 100310). Each was retested to confirm it now blocks and alerts. [See the story →](docs/portfolio-story.md)
 
 ## Why This Matters
 
@@ -111,6 +111,8 @@ Detections implemented:
 
 - Prompt injection signatures (100100–100102)
 - Role override and jailbreak-style attempts (100100, 100200)
+- Admin / credential exfiltration (100310)
+- RAG ingestion failure / poisoning probing (100320, 100321)
 - Unusual prompt/token volume (100400, 100401)
 - PHI probing from clinical AI endpoints (100300)
 
@@ -122,7 +124,7 @@ clinical-ai-detections
 
 Main deliverables:
 
-- ✅ Wazuh decoders and 7 detection rules (100100–100401)
+- ✅ Wazuh decoders and 10 detection rules (100100–100401)
 - ✅ Example logs, logtest notes, and validation samples
 - ✅ 3 Grafana dashboards (security overview, prompt injection, RAG ingestion)
 - ✅ MITRE ATLAS mapping (`clinical-ai-detections/docs/mitre-atlas-mapping.md`)

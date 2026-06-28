@@ -54,15 +54,24 @@ Every tested CAI ID traces through this pipeline with evidence in `red-team-repo
 | PHI probing (CAI-003) | Allowed | Wazuh 100300 |
 | Repeated blocks (CAI-005) | Blocked | Wazuh 100200 |
 | Encoded injection (CAI-006) | Blocked (after remediation) | Wazuh 100100–102 |
-| Admin abuse (CAI-004) | Allowed | Partial (PHI hybrid only) — open gap |
+| Admin abuse (CAI-004) | Blocked (after remediation) | Wazuh 100310 (+100300 on PHI hybrid) |
+| RAG ingestion abuse | Detected | Wazuh 100320 / 100321 |
 
-## Remediation Cycle (CAI-006)
+## Remediation Cycle (find → fix → verify)
 
-The red team didn't just find gaps — it closed one end-to-end:
+The red team didn't just find gaps — it closed two end-to-end.
+
+**CAI-006 — Encoded injection**
 
 1. **Found** — Base64 and URL-encoded overrides bypassed the literal blocklist (HTTP 200, no alert).
 2. **Fixed** — `validate_input()` now decodes URL/Base64 variants before the blocklist check and records a `decode_method` audit field.
 3. **Retested** — gateway unit tests + the `blocked-encoded-injection` detection case pass; both variants now return HTTP 400 and fire Wazuh 100100/100102.
+
+**CAI-004 — Administrative privilege abuse**
+
+1. **Found** — credential, account-enumeration, and config/API-key dump requests were answered by the model with no dedicated alert.
+2. **Fixed** — added an admin-scope blocklist (`ADMIN_ABUSE_PATTERNS`) that blocks these requests (`reason=blocked_admin_scope:*`) and a new Wazuh rule **100310**.
+3. **Retested** — gateway unit tests + the `blocked-admin-credential-exfiltration` detection case pass; both variants now return HTTP 400 and fire 100310. The admin-framed PHI variant stays allowed by design and is detected via 100300.
 
 This is the full find → fix → verify loop a security engineer is expected to own.
 

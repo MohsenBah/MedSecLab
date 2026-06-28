@@ -133,16 +133,17 @@ Detection logic is built on top of observed behavior.
 | Instruction override | 100102 | ✅ |
 | Repeated probing | 100200 | ✅ |
 | PHI probing | 100300 | ✅ |
+| Admin / credential exfiltration | 100310 | ✅ |
+| RAG ingestion failure / poisoning probing | 100320, 100321 | ✅ |
 | Abnormal query length | 100400, 100401 | ✅ |
 | Off-hours access | 100500 | Not deployed |
-| RAG data poisoning | — | Telemetry only |
 | Model tampering | 100600 | Not deployed |
 
 ### Implementation
 
 - Wazuh rules + JSON decoder (primary)
 - Grafana dashboards for investigation
-- MITRE ATLAS mapping (`AML.T0051`, `AML.T0057`)
+- MITRE ATLAS mapping (`AML.T0051`, `AML.T0057`, `AML.T0058`)
 
 **Repo:** [`clinical-ai-detections`](https://github.com/MohsenBah/clinical-ai-detections)
 
@@ -170,7 +171,7 @@ The system is tested from an attacker’s perspective.
 | CAI-001 | Ignore previous instructions | Tested |
 | CAI-002 | System prompt extraction | Tested |
 | CAI-003 | PHI probing | Tested |
-| CAI-004 | Administrative privilege abuse | Tested |
+| CAI-004 | Administrative privilege abuse | Tested — found & remediated |
 | CAI-005 | Multi-turn injection | Tested |
 | CAI-006 | Encoded injection | Tested |
 

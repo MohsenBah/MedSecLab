@@ -81,10 +81,10 @@ This is a **design and portfolio artifact**, not a production risk assessment.
 | Threat | Description | Likelihood | Impact | Controls | Detection | Status |
 |--------|-------------|------------|--------|----------|-----------|--------|
 | S-01 | Attacker forges `user_id` / `session_id` on `/query` | High (lab) | Medium | Client-supplied IDs logged as-is | **100200** correlates by `user_id` | ⚠️ No API auth |
-| S-02 | Spoofed ingest source path | Medium | Medium | Path validation on `/data/ingest` | Ingestion audit `event_type=ingestion` | 🟡 Partial |
+| S-02 | Spoofed ingest source path | Medium | Medium | Path validation on `/data/ingest` | Ingestion audit + **100320 / 100321** on failures | 🟡 Partial |
 | S-03 | Impersonate clinical vs admin user | Medium | Medium | `query_category` classification | Grafana category panels | 🟡 No RBAC |
 
-**Red team:** CAI-004 admin abuse — no identity verification that caller is authorized for admin queries.
+**Red team:** CAI-004 — credential/config exfiltration now blocked at the gateway (100310); identity verification (is the caller authorized for admin scope) remains a documented RBAC gap.
 
 **Residual risk:** HIPAA §164.312(d) authentication not implemented in the lab gateway.
 
@@ -94,7 +94,7 @@ This is a **design and portfolio artifact**, not a production risk assessment.
 
 | Threat | Description | Likelihood | Impact | Controls | Detection | Status |
 |--------|-------------|------------|--------|----------|-----------|--------|
-| T-01 | RAG poisoning via malicious ingest | Medium | High | Presidio at ingest; `clear_existing` option | Ingestion telemetry only | Documented |
+| T-01 | RAG poisoning via malicious ingest | Medium | High | Presidio at ingest; `clear_existing` option | Ingestion failure rules **100320 / 100321** | 🟡 Detective |
 | T-02 | Prompt injection alters model behavior | High | High | Input blocklist (`input_validation.py`) | **100100–100102** | ✅ Tested CAI-001/002 |
 | T-03 | Encoded injection bypasses blocklist | Medium | High | URL/Base64 normalization before blocklist | **100100–100102** (`decode_method`) | ✅ Remediated CAI-006 |
 | T-04 | Tamper with audit logs | Low | High | File permissions in container | Immutable log shipping (Loki) | 🟡 Lab only |
@@ -122,10 +122,10 @@ This is a **design and portfolio artifact**, not a production risk assessment.
 | I-01 | System prompt extraction | High | High | Blocklist patterns | **100100**, **100101** | ✅ CAI-002 |
 | I-02 | PHI leakage via LLM answers | Medium | Critical | Presidio at ingest; patient ID indirection | **100300** on query keywords | 🟡 CAI-003 |
 | I-03 | Synthetic PHI in RAG responses | Medium | Medium | Name→ID lookup; redacted ingest | Query-side detection only | 🟡 Partial |
-| I-04 | Admin/config exfiltration via query | Medium | High | None for admin-scope | None dedicated | ❌ CAI-004 gap |
+| I-04 | Admin/config exfiltration via query | Medium | High | Admin-scope blocklist (`input_validation.py`) | **100310** | ✅ Remediated CAI-004 |
 | I-05 | Model extraction / weights access | Low | Medium | No direct Ollama exposure | Not deployed (100600) | Documented |
 
-**Red team:** CAI-003 allowed at gateway, detected at SIEM. CAI-004 pure admin abuse undetected.
+**Red team:** CAI-003 allowed at gateway, detected at SIEM. CAI-004 credential/config exfiltration now blocked at gateway (100310); admin-framed PHI still detected via 100300.
 
 ---
 
@@ -135,7 +135,7 @@ This is a **design and portfolio artifact**, not a production risk assessment.
 |--------|-------------|------------|--------|----------|-----------|--------|
 | D-01 | Token flooding / long prompts | Medium | Medium | Rate limit placeholder; length bucket | **100400**, **100401** | 🟡 |
 | D-02 | Repeated injection probes | High | Low | Per-request block (fast) | **100200** correlation | ✅ CAI-005 |
-| D-03 | Ingestion DoS (large files) | Low | Medium | Ingest path validation | Ingestion `status=failed` events | 🟡 |
+| D-03 | Ingestion DoS (large files) | Low | Medium | Ingest path validation | **100320 / 100321** on `status=failed` | 🟡 |
 | D-04 | Ollama resource exhaustion | Medium | Medium | Single-worker lab | Grafana latency panels | 🟡 |
 
 **Red team:** CAI-005 repeated blocks trigger **100200** without exhausting Ollama (blocked pre-LLM).
@@ -148,7 +148,7 @@ This is a **design and portfolio artifact**, not a production risk assessment.
 |--------|-------------|------------|--------|----------|-----------|--------|
 | E-01 | Instruction override / jailbreak | High | High | Blocklist | **100100**, **100102** | ✅ CAI-001 |
 | E-02 | Bypass safety via encoding | Medium | High | URL/Base64 normalization | **100100**, **100102** | ✅ Remediated CAI-006 |
-| E-03 | Administrative privilege abuse | Medium | High | No scope separation | None (PHI hybrid → **100300** only) | ❌ CAI-004 |
+| E-03 | Administrative privilege abuse | Medium | High | Admin-scope blocklist (credential/config) | **100310** (+ **100300** for PHI hybrid) | ✅ Remediated CAI-004 |
 | E-04 | Multi-turn jailbreak (stateful) | Low | Medium | Stateless gateway | **100200** (repeated blocks only) | 🟡 CAI-005 |
 
 **Note:** Gateway does not maintain server-side conversation memory. Multi-turn tests measure per-turn blocking and SIEM correlation, not contextual jailbreak memory.
@@ -162,9 +162,11 @@ This is a **design and portfolio artifact**, not a production risk assessment.
 | CAI-001 | T, E | T-02, E-01 | Blocked | 100100, 100102 | ✅ |
 | CAI-002 | I, T | I-01, T-02 | Blocked | 100100, 100101 | ✅ |
 | CAI-003 | I, R | I-02, R-03 | Allowed | 100300 | ✅ |
-| CAI-004 | I, E, S | I-04, E-03, S-03 | Allowed | Partial | ⚠️ Gap |
+| CAI-004 | I, E, S | I-04, E-03, S-03 | Blocked* | 100310, 100300 | ✅ Remediated |
 | CAI-005 | D, E | D-02, E-04 | Blocked | 100100, 100200 | ✅ |
 | CAI-006 | T, E | T-03, E-02 | Blocked | 100100, 100102 | ✅ Remediated |
+
+\* CAI-004: credential / config / account-enumeration variants are blocked at the gateway (100310). The admin-framed PHI variant is intentionally allowed through and detected at the SIEM via 100300.
 
 Source: [`clinical-ai-redteam/docs/red-team-report-v1.md`](https://github.com/MohsenBah/clinical-ai-redteam/blob/main/docs/red-team-report-v1.md)
 
@@ -178,6 +180,7 @@ Source: [`clinical-ai-redteam/docs/red-team-report-v1.md`](https://github.com/Mo
 |---------|-----------|--------|
 | Input validation blocklist | T-02, E-01, I-01 | T, E, I |
 | Input normalization (URL/Base64 decode) | T-03, E-02 | T, E |
+| Admin-scope blocklist (credential/config) | I-04, E-03 | I, E |
 | Presidio at ingest | I-02, T-01 | I, T |
 | Rate limiting (placeholder) | D-01 | D |
 | Patient ID indirection in RAG | I-03 | I |
@@ -189,15 +192,17 @@ Source: [`clinical-ai-redteam/docs/red-team-report-v1.md`](https://github.com/Mo
 | 100100–100102 | Injection, extraction | T, E, I |
 | 100200 | Repeated probing | D, E |
 | 100300 | PHI probing | I, R |
+| 100310 | Admin/credential exfiltration | I, E |
+| 100320–100321 | RAG ingestion failure / poisoning probing | T |
 | 100400–100401 | Abnormal length | D |
 
 ### Gaps (documented residual risk)
 
 | Gap | CAI | Priority | Recommended mitigation |
 |-----|-----|----------|------------------------|
-| Admin abuse undetected | CAI-004 | Medium | Admin-scope rules or gateway RBAC |
 | Nested / multi-layer encoding | CAI-006 | Low | Single-layer URL/Base64 remediated; ML classifier for deeper obfuscation |
-| RAG poisoning rules | T-01 | Medium | Wazuh rules on ingestion anomalies |
+| Admin RBAC / identity scope | CAI-004 | Medium | Credential/config exfil blocked (100310); per-role authorization still pending |
+| Successful (non-failing) RAG poisoning | T-01 | Medium | 100320/100321 catch malformed/failed ingests; content-level provenance still pending |
 | No API authentication | S-01, S-03 | High | API keys / OIDC / mTLS |
 | Output-side PHI filter | I-02 | Medium | Strengthen `output_filter` |
 

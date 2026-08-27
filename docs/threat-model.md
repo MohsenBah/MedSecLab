@@ -4,7 +4,7 @@
 **Version:** 1.0 · June 2026  
 **Scope:** `clinical-ai-gateway` + `clinical-ai-detections` + `clinical-ai-redteam` lab stack
 
-Related: [roadmap.md](roadmap.md) · [Red team report v1](https://github.com/MohsenBah/clinical-ai-redteam/blob/main/docs/red-team-report-v1.md) · [Compliance matrix](https://github.com/MohsenBah/clinical-ai-detections/blob/main/docs/compliance-matrix.md)
+Related: [roadmap.md](roadmap.md) · [Red team report v1](https://github.com/MohsenBahremani/clinical-ai-redteam/blob/main/docs/red-team-report-v1.md) · [Compliance matrix](https://github.com/MohsenBahremani/clinical-ai-detections/blob/main/docs/compliance-matrix.md)
 
 ---
 
@@ -168,7 +168,7 @@ This is a **design and portfolio artifact**, not a production risk assessment.
 
 \* CAI-004: credential / config / account-enumeration variants are blocked at the gateway (100310). The admin-framed PHI variant is intentionally allowed through and detected at the SIEM via 100300.
 
-Source: [`clinical-ai-redteam/docs/red-team-report-v1.md`](https://github.com/MohsenBah/clinical-ai-redteam/blob/main/docs/red-team-report-v1.md)
+Source: [`clinical-ai-redteam/docs/red-team-report-v1.md`](https://github.com/MohsenBahremani/clinical-ai-redteam/blob/main/docs/red-team-report-v1.md)
 
 ---
 
@@ -246,7 +246,7 @@ audit (event_type=ingestion) ──► Grafana ingestion dashboard
 
 | Framework | STRIDE relevance | Portfolio mapping |
 |-----------|------------------|-------------------|
-| HIPAA §164.312 | S, R, I, T | [compliance-matrix.md](https://github.com/MohsenBah/clinical-ai-detections/blob/main/docs/compliance-matrix.md) |
+| HIPAA §164.312 | S, R, I, T | [compliance-matrix.md](https://github.com/MohsenBahremani/clinical-ai-detections/blob/main/docs/compliance-matrix.md) |
 | OWASP LLM Top 10 | T, I, E | LLM01 (injection), LLM02 (output), LLM06 (excessive agency) |
 | NIST AI RMF | Map, Measure, Manage | Threat model = **Map**; detections = **Measure**; gateway blocks = **Manage** |
 | MITRE ATLAS | T, I, E | AML.T0051, AML.T0057 on Wazuh rules |

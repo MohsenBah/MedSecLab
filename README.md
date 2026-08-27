@@ -3,7 +3,7 @@
 
 > **Securing clinical AI end-to-end — attack → gateway → audit log → SIEM detection → dashboard — using only synthetic healthcare data.**
 
-![Detections CI](https://github.com/MohsenBah/clinical-ai-detections/actions/workflows/validate-detections.yml/badge.svg)
+![Detections CI](https://github.com/MohsenBahremani/clinical-ai-detections/actions/workflows/validate-detections.yml/badge.svg)
 ![Synthetic data only](https://img.shields.io/badge/data-synthetic%20only-brightgreen)
 ![Stack](https://img.shields.io/badge/stack-FastAPI%20%C2%B7%20Ollama%20%C2%B7%20Chroma%20%C2%B7%20Wazuh%20%C2%B7%20Grafana-blue)
 ![Frameworks](https://img.shields.io/badge/mapped-MITRE%20ATLAS%20%C2%B7%20STRIDE%20%C2%B7%20HIPAA%20%C2%B7%20OWASP%20LLM-orange)
@@ -63,7 +63,7 @@ The demo covers:
 4. PHI probing (allowed by gateway) → Wazuh rule **100300**
 5. Structured audit logging in `security.log`
 
-Reproducible scripts: [`clinical-ai-gateway/demo/`](https://github.com/MohsenBah/clinical-ai-gateway/tree/main/demo) (`05-run-full-demo.sh`)
+Reproducible scripts: [`clinical-ai-gateway/demo/`](https://github.com/MohsenBahremani/clinical-ai-gateway/tree/main/demo) (`05-run-full-demo.sh`)
 
 ## Portfolio Repositories
 
@@ -71,10 +71,10 @@ MedSecLab is the umbrella repo. The technical work is split into focused reposit
 
 | Repository | Purpose | Status |
 |---|---|---|
-| [`MedSecLab`](https://github.com/MohsenBah/MedSecLab) | Portfolio landing page, architecture, roadmap, demo video | Active |
-| [`clinical-ai-gateway`](https://github.com/MohsenBah/clinical-ai-gateway) | Secure FastAPI gateway for clinical LLM/RAG workloads | Active |
-| [`clinical-ai-detections`](https://github.com/MohsenBah/clinical-ai-detections) | Wazuh rules, Grafana dashboards, MITRE ATLAS mapping | Active |
-| [`clinical-ai-redteam`](https://github.com/MohsenBah/clinical-ai-redteam) | Attack methodology, campaigns, Garak/PyRIT, red team report | Active |
+| [`MedSecLab`](https://github.com/MohsenBahremani/MedSecLab) | Portfolio landing page, architecture, roadmap, demo video | Active |
+| [`clinical-ai-gateway`](https://github.com/MohsenBahremani/clinical-ai-gateway) | Secure FastAPI gateway for clinical LLM/RAG workloads | Active |
+| [`clinical-ai-detections`](https://github.com/MohsenBahremani/clinical-ai-detections) | Wazuh rules, Grafana dashboards, MITRE ATLAS mapping | Active |
+| [`clinical-ai-redteam`](https://github.com/MohsenBahremani/clinical-ai-redteam) | Attack methodology, campaigns, Garak/PyRIT, red team report | Active |
 
 ## Main Project Tracks
 
@@ -150,7 +150,7 @@ clinical-ai-redteam
 Main deliverables:
 
 - ✅ Red-team methodology, campaign, Garak, PyRIT
-- ✅ Findings report — [`clinical-ai-redteam/docs/red-team-report-v1.md`](https://github.com/MohsenBah/clinical-ai-redteam/blob/main/docs/red-team-report-v1.md)
+- ✅ Findings report — [`clinical-ai-redteam/docs/red-team-report-v1.md`](https://github.com/MohsenBahremani/clinical-ai-redteam/blob/main/docs/red-team-report-v1.md)
 - ✅ MITRE ATLAS mapping (via detections + attack catalog)
 - ✅ Mitigations and retest results documented in red team report
 
@@ -197,12 +197,12 @@ The end-to-end demo video is published as a GitHub asset and embedded above; it 
 | Deliverable | Status |
 |---|---|
 | Landing repo (MedSecLab) | ✅ Active |
-| Secure clinical AI gateway + RAG | ✅ [`clinical-ai-gateway`](https://github.com/MohsenBah/clinical-ai-gateway) |
-| Wazuh / Grafana detection stack | ✅ [`clinical-ai-detections`](https://github.com/MohsenBah/clinical-ai-detections) |
+| Secure clinical AI gateway + RAG | ✅ [`clinical-ai-gateway`](https://github.com/MohsenBahremani/clinical-ai-gateway) |
+| Wazuh / Grafana detection stack | ✅ [`clinical-ai-detections`](https://github.com/MohsenBahremani/clinical-ai-detections) |
 | End-to-end demo video | ✅ [README embed](https://github.com/user-attachments/assets/e31164a2-6abf-4c0c-8143-fafe04147924) |
-| MITRE ATLAS rule mapping | ✅ [`mitre-atlas-mapping.md`](https://github.com/MohsenBah/clinical-ai-detections/blob/main/docs/mitre-atlas-mapping.md) |
-| Compliance matrix (HIPAA / OWASP / NIST) | ✅ [`compliance-matrix.md`](https://github.com/MohsenBah/clinical-ai-detections/blob/main/docs/compliance-matrix.md) |
-| Structured red-team report | ✅ [`red-team-report-v1`](https://github.com/MohsenBah/clinical-ai-redteam/blob/main/docs/red-team-report-v1.md) |
+| MITRE ATLAS rule mapping | ✅ [`mitre-atlas-mapping.md`](https://github.com/MohsenBahremani/clinical-ai-detections/blob/main/docs/mitre-atlas-mapping.md) |
+| Compliance matrix (HIPAA / OWASP / NIST) | ✅ [`compliance-matrix.md`](https://github.com/MohsenBahremani/clinical-ai-detections/blob/main/docs/compliance-matrix.md) |
+| Structured red-team report | ✅ [`red-team-report-v1`](https://github.com/MohsenBahremani/clinical-ai-redteam/blob/main/docs/red-team-report-v1.md) |
 | STRIDE threat model | ✅ [`docs/threat-model.md`](docs/threat-model.md) |
 | Architecture diagrams | ✅ [`diagrams/`](diagrams/) |
 | Portfolio writeup | ✅ [`docs/portfolio-story.md`](docs/portfolio-story.md) |

@@ -92,10 +92,10 @@ cd clinical-ai-gateway && ./demo/05-run-full-demo.sh
 
 | Repo | Role |
 |------|------|
-| [MedSecLab](https://github.com/MohsenBah/MedSecLab) | Portfolio hub |
-| [clinical-ai-gateway](https://github.com/MohsenBah/clinical-ai-gateway) | Secure inference |
-| [clinical-ai-detections](https://github.com/MohsenBah/clinical-ai-detections) | SIEM + dashboards |
-| [clinical-ai-redteam](https://github.com/MohsenBah/clinical-ai-redteam) | Adversarial validation |
+| [MedSecLab](https://github.com/MohsenBahremani/MedSecLab) | Portfolio hub |
+| [clinical-ai-gateway](https://github.com/MohsenBahremani/clinical-ai-gateway) | Secure inference |
+| [clinical-ai-detections](https://github.com/MohsenBahremani/clinical-ai-detections) | SIEM + dashboards |
+| [clinical-ai-redteam](https://github.com/MohsenBahremani/clinical-ai-redteam) | Adversarial validation |
 
 ## Diagrams
 

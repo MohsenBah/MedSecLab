@@ -55,7 +55,7 @@ The starting point is a minimal but secure inference service.
 - Every response is observable
 - Security is enforced at the gateway, not the model
 
-**Repo:** [`clinical-ai-gateway`](https://github.com/MohsenBah/clinical-ai-gateway)
+**Repo:** [`clinical-ai-gateway`](https://github.com/MohsenBahremani/clinical-ai-gateway)
 
 ---
 
@@ -116,7 +116,7 @@ All system activity becomes traceable.
 - 3 Grafana dashboards (security overview, prompt injection, RAG ingestion)
 - Input for Wazuh detection engineering
 
-**Docs:** [`clinical-ai-gateway/docs/audit-logging.md`](https://github.com/MohsenBah/clinical-ai-gateway/blob/main/docs/audit-logging.md)
+**Docs:** [`clinical-ai-gateway/docs/audit-logging.md`](https://github.com/MohsenBahremani/clinical-ai-gateway/blob/main/docs/audit-logging.md)
 
 ---
 
@@ -145,7 +145,7 @@ Detection logic is built on top of observed behavior.
 - Grafana dashboards for investigation
 - MITRE ATLAS mapping (`AML.T0051`, `AML.T0057`, `AML.T0058`)
 
-**Repo:** [`clinical-ai-detections`](https://github.com/MohsenBah/clinical-ai-detections)
+**Repo:** [`clinical-ai-detections`](https://github.com/MohsenBahremani/clinical-ai-detections)
 
 ---
 
@@ -187,7 +187,7 @@ Attack → Gateway → Audit Log → Detection Rule → Grafana → Wazuh
 - Attack catalog mapped to MITRE ATLAS and Wazuh rules
 - Campaign script: `scripts/run_campaign.sh`
 
-**Repo:** [`clinical-ai-redteam`](https://github.com/MohsenBah/clinical-ai-redteam)
+**Repo:** [`clinical-ai-redteam`](https://github.com/MohsenBahremani/clinical-ai-redteam)
 
 ---
 
@@ -254,8 +254,8 @@ The system is considered complete when:
 | Detection rules identify abnormal behavior | ✅ |
 | Demo video shows full pipeline | ✅ [README embed](https://github.com/user-attachments/assets/e31164a2-6abf-4c0c-8143-fafe04147924) |
 | MITRE ATLAS mapping for active rules | ✅ |
-| Compliance matrix (HIPAA / OWASP / NIST) | ✅ [`compliance-matrix.md`](https://github.com/MohsenBah/clinical-ai-detections/blob/main/docs/compliance-matrix.md) |
-| Red team testing produces findings and verified mitigations | ✅ [`red-team-report-v1`](https://github.com/MohsenBah/clinical-ai-redteam/blob/main/docs/red-team-report-v1.md) |
+| Compliance matrix (HIPAA / OWASP / NIST) | ✅ [`compliance-matrix.md`](https://github.com/MohsenBahremani/clinical-ai-detections/blob/main/docs/compliance-matrix.md) |
+| Red team testing produces findings and verified mitigations | ✅ [`red-team-report-v1`](https://github.com/MohsenBahremani/clinical-ai-redteam/blob/main/docs/red-team-report-v1.md) |
 | STRIDE threat model | ✅ [`threat-model.md`](threat-model.md) |
 | Automated detection validation | ✅ `validate_rules.py --offline` |
 | All components documented and reproducible | ✅ |
